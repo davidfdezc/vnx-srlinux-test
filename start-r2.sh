@@ -3,7 +3,9 @@
 DIR=$(pwd)
 CFGDIR=$DIR/conf/srl-r2
 
-mkdir -p $DIR/conf/srl-r2
+mkdir -p $CFGDIR
+
+echo "-- CFGDIR=$CFGDIR"
 
 # Start r2 docker
 docker run \
@@ -30,4 +32,9 @@ sudo bash -c 'touch /.dockerenv && /opt/srlinux/bin/sr_linux'
 sleep 8
 sudo ovs-docker add-port Net1 e1-1 r2
 sudo ovs-docker add-port Net2 e1-2 r2
+
+# Disable TCP offload in veth interfaces
+docker exec r1 ethtool -K e1-1 tx off
+docker exec r1 ethtool -K e1-2 tx off
+
 docker exec r2 sr_cli source /etc/opt/srlinux/r2.cfg

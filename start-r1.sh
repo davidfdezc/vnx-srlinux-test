@@ -32,5 +32,14 @@ sleep 8
 sudo ovs-docker add-port Net0 e1-1 r1
 sudo ovs-docker add-port Net1 e1-2 r1
 sudo ovs-docker add-port Net3 e1-3 r1
+
+# Disable TCP offload in veth interfaces
+docker exec r1 ethtool -K e1-1 tx off
+docker exec r1 ethtool -K e1-2 tx off
+docker exec r1 ethtool -K e1-3 tx off
+docker exec r1 ethtool -K e1-1 rx off
+docker exec r1 ethtool -K e1-2 rx off
+docker exec r1 ethtool -K e1-3 rx off
+
 docker exec r1 sr_cli source /etc/opt/srlinux/r1.cfg
 
