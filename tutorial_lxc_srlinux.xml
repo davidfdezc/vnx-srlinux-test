@@ -36,10 +36,6 @@ SPAIN
         <console id="1" display="yes"/>
     </vm_defaults>
 
-    <cmd-seq seq="ls12">ls1,ls2</cmd-seq>
-    <cmd-seq seq="ls123">ls12,ls3</cmd-seq>
-    <cmd-seq seq="ls1234">ls123,ls4</cmd-seq>
-
     <vnx_cfg>tutorial_lxc_ubuntu.cvnx</vnx_cfg>
 
     <help>
@@ -66,6 +62,9 @@ SPAIN
     </if>
     <route type="ipv4" gw="10.1.0.1">10.1.0.0/16</route>   
     <route type="ipv6" gw="2001:db8:0::1">2001:db8::/32</route>
+    <exec seq="on_boot" type="verbatim" ostype="system">
+        ethtool --offload eth1 tx off
+    </exec>
   </vm>
 
   <vm name="h2" type="lxc" arch="x86_64">
@@ -79,10 +78,9 @@ SPAIN
     </if>
     <route type="ipv4" gw="10.1.0.1">10.1.0.0/16</route>
     <route type="ipv6" gw="2001:db8:0::1">2001:db8::/32</route>
-    <exec seq="ls1" type="verbatim">ls -al /tmp</exec>
-    <exec seq="ls2" type="verbatim">ls -al /root</exec>
-    <exec seq="ls3" type="verbatim">ls -al /usr</exec>
-    <exec seq="ls4" type="verbatim">ls -al /bin</exec>
+    <exec seq="on_boot" type="verbatim" ostype="system">
+        ethtool --offload eth1 tx off
+    </exec>
   </vm>
 
   <vm name="r1" type="lxc" arch="x86_64">
@@ -138,6 +136,9 @@ SPAIN
     </if>
     <route type="ipv4" gw="10.1.2.1">10.1.0.0/16</route>
     <route type="ipv6" gw="2001:db8:2::1">2001:db8::/32</route>
+    <exec seq="on_boot" type="verbatim" ostype="system">
+        ethtool --offload eth1 tx off
+    </exec>
     <!-- Copy the files under conf/tutorial_ubuntu/h3 to vm /var/www/html directory -->
     <filetree seq="start-www" root="/var/www/html/">conf/tutorial_ubuntu/h3/*</filetree>
     <!-- Start/stop apache www server -->
@@ -159,6 +160,9 @@ SPAIN
     </if>
     <route type="ipv4" gw="10.1.2.1">10.1.0.0/16</route>    
     <route type="ipv6" gw="2001:db8:2::1">2001:db8::/32</route>
+    <exec seq="on_boot" type="verbatim" ostype="system">
+        ethtool --offload eth1 tx off
+    </exec>
     <!-- Copy the files under conf/tutorial_ubuntu/h4 to vm /var/www/html directory -->
     <filetree seq="start-www" root="/var/www/html/">conf/tutorial_ubuntu/h4/*</filetree>
     <!-- Start/stop apache www server -->
